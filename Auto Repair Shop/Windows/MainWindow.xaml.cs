@@ -153,8 +153,11 @@ namespace Auto_Repair_Shop.Windows {
         #region Функции нижней панели.
         private void settings_Click(object sender, RoutedEventArgs e) {
             SettingsWindow window = new SettingsWindow();
+            bool? result = window.ShowDialog();
 
-            window.ShowDialog();
+            if (result.HasValue && result.Value) {
+                selectionChanged(default, default);
+            }
         }
 
         private void serviceReporting_Click(object sender, RoutedEventArgs e) {

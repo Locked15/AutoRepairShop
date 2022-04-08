@@ -27,6 +27,7 @@ namespace Auto_Repair_Shop.Windows {
         /// <param name="e">Аргументы данного события.</param>
         private void saveSettings_Click(object sender, RoutedEventArgs e) {
             ProgramSettings.saveConfig();
+            DialogResult = true;
 
             Close();
         }
