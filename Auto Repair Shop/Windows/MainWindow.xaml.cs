@@ -55,7 +55,7 @@ namespace Auto_Repair_Shop.Windows {
             var search = searchBox.Text.ToLower();
             selectedRequests = DBEntities.Instance.Service_Request.ToList();
 
-            if (!ProgramSettings.showCompletedRequests) {
+            if (!ProgramSettings.settings.showCompletedRequests) {
                 selectedRequests = selectedRequests.Where(x => x.Request_Approx_Complete.HasValue && x.Request_Approx_Complete.Value < DateTime.Now).ToList();
             }
 
@@ -152,7 +152,9 @@ namespace Auto_Repair_Shop.Windows {
 
         #region Функции нижней панели.
         private void settings_Click(object sender, RoutedEventArgs e) {
+            SettingsWindow window = new SettingsWindow();
 
+            window.ShowDialog();
         }
 
         private void serviceReporting_Click(object sender, RoutedEventArgs e) {
