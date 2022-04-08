@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище AutoRepairShopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Parts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Part_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Part_Price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parts_To_Request">
+          <Key>
+            <PropertyRef Name="Tether_Id" />
+          </Key>
+          <Property Name="Tether_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Request_Id" Type="int" Nullable="false" />
+          <Property Name="Part_Id" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Service_Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Vehicle_Id" Type="int" Nullable="false" />
+          <Property Name="Requester_Id" Type="int" Nullable="false" />
+          <Property Name="Request_Date" Type="date" />
+          <Property Name="Request_Approx_Complete" Type="date" />
+          <Property Name="Service_Type_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Brand_Id" Type="int" Nullable="false" />
+          <Property Name="Owner_Id" Type="int" Nullable="false" />
+          <Property Name="State_Number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Vehicle_Class" Type="int" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehicle_Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__Parts_To___Part___32E0915F">
+          <End Role="Parts" Type="Self.Parts" Multiplicity="1" />
+          <End Role="Parts_To_Request" Type="Self.Parts_To_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parts_To_Request">
+              <PropertyRef Name="Part_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Parts_To___Reque__33D4B598">
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="1" />
+          <End Role="Parts_To_Request" Type="Self.Parts_To_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service_Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parts_To_Request">
+              <PropertyRef Name="Request_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service_R__Reque__34C8D9D1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Service_Request">
+              <PropertyRef Name="Requester_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service_R__Vehic__35BCFE0A">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1" />
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Service_Request">
+              <PropertyRef Name="Vehicle_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vehicle__Brand_I__38996AB5">
+          <End Role="Vehicle_Brand" Type="Self.Vehicle_Brand" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle_Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="Brand_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vehicle__Owner_I__37A5467C">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="Owner_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Service_Type_FK">
+          <End Role="Service_Type" Type="Self.Service_Type" Multiplicity="1" />
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Service_Request">
+              <PropertyRef Name="Service_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище AutoRepairShopModelContainer">
+          <EntitySet Name="Parts" EntityType="Self.Parts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parts_To_Request" EntityType="Self.Parts_To_Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service_Request" EntityType="Self.Service_Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service_Type" EntityType="Self.Service_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicle_Brand" EntityType="Self.Vehicle_Brand" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Parts_To___Part___32E0915F" Association="Self.FK__Parts_To___Part___32E0915F">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="Parts_To_Request" EntitySet="Parts_To_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Parts_To___Reque__33D4B598" Association="Self.FK__Parts_To___Reque__33D4B598">
+            <End Role="Service_Request" EntitySet="Service_Request" />
+            <End Role="Parts_To_Request" EntitySet="Parts_To_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service_R__Reque__34C8D9D1" Association="Self.FK__Service_R__Reque__34C8D9D1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Service_Request" EntitySet="Service_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service_R__Vehic__35BCFE0A" Association="Self.FK__Service_R__Vehic__35BCFE0A">
+            <End Role="Vehicle" EntitySet="Vehicle" />
+            <End Role="Service_Request" EntitySet="Service_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vehicle__Brand_I__38996AB5" Association="Self.FK__Vehicle__Brand_I__38996AB5">
+            <End Role="Vehicle_Brand" EntitySet="Vehicle_Brand" />
+            <End Role="Vehicle" EntitySet="Vehicle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vehicle__Owner_I__37A5467C" Association="Self.FK__Vehicle__Owner_I__37A5467C">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Vehicle" EntitySet="Vehicle" />
+          </AssociationSet>
+          <AssociationSet Name="Service_Type_FK" Association="Self.Service_Type_FK">
+            <End Role="Service_Type" EntitySet="Service_Type" />
+            <End Role="Service_Request" EntitySet="Service_Request" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AutoRepairShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Part_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Part_Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Parts_To_Request" Relationship="Self.FK__Parts_To___Part___32E0915F" FromRole="Parts" ToRole="Parts_To_Request" />
+        </EntityType>
+        <EntityType Name="Parts_To_Request">
+          <Key>
+            <PropertyRef Name="Tether_Id" />
+          </Key>
+          <Property Name="Tether_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Request_Id" Type="Int32" Nullable="false" />
+          <Property Name="Part_Id" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Part" Relationship="Self.FK__Parts_To___Part___32E0915F" FromRole="Parts_To_Request" ToRole="Parts" />
+          <NavigationProperty Name="Service_Request" Relationship="Self.FK__Parts_To___Reque__33D4B598" FromRole="Parts_To_Request" ToRole="Service_Request" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Service_Request" Relationship="Self.FK__Service_R__Reque__34C8D9D1" FromRole="Person" ToRole="Service_Request" />
+          <NavigationProperty Name="Vehicles" Relationship="Self.FK__Vehicle__Owner_I__37A5467C" FromRole="Person" ToRole="Vehicle" />
+        </EntityType>
+        <EntityType Name="Service_Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Vehicle_Id" Type="Int32" Nullable="false" />
+          <Property Name="Requester_Id" Type="Int32" Nullable="false" />
+          <Property Name="Request_Date" Type="DateTime" Precision="0" />
+          <Property Name="Request_Approx_Complete" Type="DateTime" Precision="0" />
+          <Property Name="Service_Type_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parts_To_Request" Relationship="Self.FK__Parts_To___Reque__33D4B598" FromRole="Service_Request" ToRole="Parts_To_Request" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Service_R__Reque__34C8D9D1" FromRole="Service_Request" ToRole="Person" />
+          <NavigationProperty Name="Vehicle" Relationship="Self.FK__Service_R__Vehic__35BCFE0A" FromRole="Service_Request" ToRole="Vehicle" />
+          <NavigationProperty Name="Service_Type" Relationship="Self.Service_Type_FK" FromRole="Service_Request" ToRole="Service_Type" />
+        </EntityType>
+        <EntityType Name="Service_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Service_Request" Relationship="Self.Service_Type_FK" FromRole="Service_Type" ToRole="Service_Request" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Brand_Id" Type="Int32" Nullable="false" />
+          <Property Name="Owner_Id" Type="Int32" Nullable="false" />
+          <Property Name="State_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Vehicle_Class" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Vehicle__Owner_I__37A5467C" FromRole="Vehicle" ToRole="Person" />
+          <NavigationProperty Name="Service_Request" Relationship="Self.FK__Service_R__Vehic__35BCFE0A" FromRole="Vehicle" ToRole="Service_Request" />
+          <NavigationProperty Name="Vehicle_Brand" Relationship="Self.FK__Vehicle__Brand_I__38996AB5" FromRole="Vehicle" ToRole="Vehicle_Brand" />
+        </EntityType>
+        <EntityType Name="Vehicle_Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Brand" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Vehicles" Relationship="Self.FK__Vehicle__Brand_I__38996AB5" FromRole="Vehicle_Brand" ToRole="Vehicle" />
+        </EntityType>
+        <Association Name="FK__Parts_To___Part___32E0915F">
+          <End Role="Parts" Type="Self.Part" Multiplicity="1" />
+          <End Role="Parts_To_Request" Type="Self.Parts_To_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parts_To_Request">
+              <PropertyRef Name="Part_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Parts_To___Reque__33D4B598">
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="1" />
+          <End Role="Parts_To_Request" Type="Self.Parts_To_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service_Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parts_To_Request">
+              <PropertyRef Name="Request_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service_R__Reque__34C8D9D1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Service_Request">
+              <PropertyRef Name="Requester_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vehicle__Owner_I__37A5467C">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="Owner_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service_R__Vehic__35BCFE0A">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1" />
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Service_Request">
+              <PropertyRef Name="Vehicle_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Service_Type_FK">
+          <End Role="Service_Type" Type="Self.Service_Type" Multiplicity="1" />
+          <End Role="Service_Request" Type="Self.Service_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Service_Request">
+              <PropertyRef Name="Service_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vehicle__Brand_I__38996AB5">
+          <End Role="Vehicle_Brand" Type="Self.Vehicle_Brand" Multiplicity="1" />
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle_Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicle">
+              <PropertyRef Name="Brand_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Parts" EntityType="Self.Part" />
+          <EntitySet Name="Parts_To_Request" EntityType="Self.Parts_To_Request" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="Service_Request" EntityType="Self.Service_Request" />
+          <EntitySet Name="Service_Type" EntityType="Self.Service_Type" />
+          <EntitySet Name="Vehicles" EntityType="Self.Vehicle" />
+          <EntitySet Name="Vehicle_Brand" EntityType="Self.Vehicle_Brand" />
+          <AssociationSet Name="FK__Parts_To___Part___32E0915F" Association="Self.FK__Parts_To___Part___32E0915F">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="Parts_To_Request" EntitySet="Parts_To_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Parts_To___Reque__33D4B598" Association="Self.FK__Parts_To___Reque__33D4B598">
+            <End Role="Service_Request" EntitySet="Service_Request" />
+            <End Role="Parts_To_Request" EntitySet="Parts_To_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service_R__Reque__34C8D9D1" Association="Self.FK__Service_R__Reque__34C8D9D1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Service_Request" EntitySet="Service_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vehicle__Owner_I__37A5467C" Association="Self.FK__Vehicle__Owner_I__37A5467C">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Vehicle" EntitySet="Vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service_R__Vehic__35BCFE0A" Association="Self.FK__Service_R__Vehic__35BCFE0A">
+            <End Role="Vehicle" EntitySet="Vehicles" />
+            <End Role="Service_Request" EntitySet="Service_Request" />
+          </AssociationSet>
+          <AssociationSet Name="Service_Type_FK" Association="Self.Service_Type_FK">
+            <End Role="Service_Type" EntitySet="Service_Type" />
+            <End Role="Service_Request" EntitySet="Service_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vehicle__Brand_I__38996AB5" Association="Self.FK__Vehicle__Brand_I__38996AB5">
+            <End Role="Vehicle_Brand" EntitySet="Vehicle_Brand" />
+            <End Role="Vehicle" EntitySet="Vehicles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AutoRepairShopModelContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Parts">
+            <EntityTypeMapping TypeName="AutoRepairShopModel.Part">
+              <MappingFragment StoreEntitySet="Parts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Part_Name" ColumnName="Part_Name" />
+                <ScalarProperty Name="Part_Price" ColumnName="Part_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parts_To_Request">
+            <EntityTypeMapping TypeName="AutoRepairShopModel.Parts_To_Request">
+              <MappingFragment StoreEntitySet="Parts_To_Request">
+                <ScalarProperty Name="Tether_Id" ColumnName="Tether_Id" />
+                <ScalarProperty Name="Request_Id" ColumnName="Request_Id" />
+                <ScalarProperty Name="Part_Id" ColumnName="Part_Id" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="AutoRepairShopModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Service_Request">
+            <EntityTypeMapping TypeName="AutoRepairShopModel.Service_Request">
+              <MappingFragment StoreEntitySet="Service_Request">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Vehicle_Id" ColumnName="Vehicle_Id" />
+                <ScalarProperty Name="Requester_Id" ColumnName="Requester_Id" />
+                <ScalarProperty Name="Request_Date" ColumnName="Request_Date" />
+                <ScalarProperty Name="Request_Approx_Complete" ColumnName="Request_Approx_Complete" />
+                <ScalarProperty Name="Service_Type_Id" ColumnName="Service_Type_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Service_Type">
+            <EntityTypeMapping TypeName="AutoRepairShopModel.Service_Type">
+              <MappingFragment StoreEntitySet="Service_Type">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicles">
+            <EntityTypeMapping TypeName="AutoRepairShopModel.Vehicle">
+              <MappingFragment StoreEntitySet="Vehicle">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Brand_Id" ColumnName="Brand_Id" />
+                <ScalarProperty Name="Owner_Id" ColumnName="Owner_Id" />
+                <ScalarProperty Name="State_Number" ColumnName="State_Number" />
+                <ScalarProperty Name="Vehicle_Class" ColumnName="Vehicle_Class" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicle_Brand">
+            <EntityTypeMapping TypeName="AutoRepairShopModel.Vehicle_Brand">
+              <MappingFragment StoreEntitySet="Vehicle_Brand">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

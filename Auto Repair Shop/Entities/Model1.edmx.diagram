@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f074800c78ba4d7aba016407aa8b20d9" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="AutoRepairShopModel.Part" Width="1.5" PointX="11.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoRepairShopModel.Parts_To_Request" Width="1.5" PointX="13.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoRepairShopModel.Person" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoRepairShopModel.Service_Request" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoRepairShopModel.Service_Type" Width="1.5" PointX="6" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoRepairShopModel.Vehicle" Width="1.5" PointX="11.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoRepairShopModel.Vehicle_Brand" Width="1.5" PointX="9" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="AutoRepairShopModel.FK__Parts_To___Part___32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="AutoRepairShopModel.FK__Parts_To___Reque__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="AutoRepairShopModel.FK__Service_R__Reque__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="AutoRepairShopModel.FK__Vehicle__Owner_I__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="AutoRepairShopModel.FK__Service_R__Vehic__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="AutoRepairShopModel.Service_Type_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="AutoRepairShopModel.FK__Vehicle__Brand_I__38996AB5" ManuallyRouted="false" ></AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
