@@ -11,7 +11,7 @@ namespace Auto_Repair_Shop.Entities
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Vehicle
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +19,7 @@ namespace Auto_Repair_Shop.Entities
         {
             this.Service_Request = new HashSet<Service_Request>();
         }
-    
+
         public int Id { get; set; }
         public int Brand_Id { get; set; }
         public int Owner_Id { get; set; }
@@ -27,10 +27,32 @@ namespace Auto_Repair_Shop.Entities
         public int Vehicle_Class { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
-    
+
         public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Service_Request> Service_Request { get; set; }
         public virtual Vehicle_Brand Vehicle_Brand { get; set; }
+
+        /// <summary>
+        /// Рассчитывает прибавку к стоимости в зависимости от класса машины.
+        /// </summary>
+        /// <returns>Модификатор стоимости.</returns>
+        /// <exception cref="Exception">Нераспознанный класс машины.</exception>
+        public decimal calculateClassModifier() {
+            switch (Vehicle_Class) {
+                case 0:
+                    return 0;
+                case 1:
+                    return 10;
+                case 2:
+                    return 6.5M;
+                case 3:
+                    return 3.3M;
+                case 4: case 5:
+                    return 1;
+                default:
+                    throw new Exception("Oh no, something went wrong! But by the way...");
+            }
+        }
     }
 }

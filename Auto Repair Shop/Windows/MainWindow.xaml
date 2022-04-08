@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Auto_Repair_Shop"
         mc:Ignorable="d"
-        Title="Главная — Auto Repair Shop" 
+        Title="Главная — Auto Repair Shop"
         Height="450" Width="800"
-        MinHeight="400" MinWidth="750">
+        MinHeight="400" MinWidth="750"
+        SizeChanged="window_SizeChanged">
 
-    <Grid>
+    <Grid Margin="0.5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="310*"/>
+            <ColumnDefinition Width="270*"/>
+            <ColumnDefinition Width="270*"/>
             <ColumnDefinition Width="220*"/>
             <ColumnDefinition Width="220*"/>
         </Grid.ColumnDefinitions>
@@ -23,16 +25,56 @@
             <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
 
-        <!-- #region Область: Верхняя панель. -->
-        
+        <!-- #region Верхняя панель. -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Поиск:" FontSize="20"/>
+        <TextBox Name="searchBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="" Margin="2.5"
+                 FontSize="18"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Сортировка:" FontSize="20"/>
+        <ComboBox Name="sortBox" Grid.Row="1" Grid.Column="2" SelectedIndex="0" FontSize="18" Margin="2.5">
+            <ComboBoxItem Content="Без сортировки"/>
+
+            <ComboBoxItem Content="По возрастанию:" IsEnabled="False" FontSize="22"/>
+            <ComboBoxItem Content="Стоимость заказа"/>
+            <ComboBoxItem Content="Количество материалов"/>
+            <ComboBoxItem Content="Дата выполнения"/>
+
+            <ComboBoxItem Content="По убыванию:" IsEnabled="False" FontSize="22"/>
+            <ComboBoxItem Content="Стоимость заказа"/>
+            <ComboBoxItem Content="Количество материалов"/>
+            <ComboBoxItem Content="Дата выполнения"/>
+        </ComboBox>
+
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="Типы услуг:" FontSize="20"/>
+        <ComboBox Name="filterBox" Grid.Row="1" Grid.Column="3" SelectedIndex="0" FontSize="18" Margin="2.5"/>
         <!-- #endregion -->
         
-        <!-- #region Область: Основное содержимое. -->
-        
+        <!-- #region Основное содержимое. -->
+        <ListView Name="ActiveRequests" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" MouseDoubleClick="activeRequests_MouseDoubleClick"
+                  Background="Gray" BorderBrush="Black" BorderThickness="1.5"/>
         <!-- #endregion -->
         
-        <!-- #region Область: Нижняя панель. -->
+        <!-- #region Нижняя панель. -->
+        <Button Name="settings" Grid.Row="3" Grid.Column="0" Content="Настройки" Click="settings_Click" FontSize="18"
+                Margin="1.5"/>
+
+        <Button Name="serviceReporting" Grid.Row="3" Grid.Column="1" Content="Отчётность..." Click="serviceReporting_Click" FontSize="18"
+                Margin="1.5"/>
+
+        <Button Name="addServiceRequest" Grid.Row="3" Grid.Column="2" Content="Добавить запрос" Click="addServiceRequest_Click" FontSize="18"
+                Margin="1.5"/>
         
+        <!-- #region Подобласть: Навигационная панель. -->
+        <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="previousPage" Content="&#8656;" FontSize="26" Background="Transparent" BorderBrush="Transparent"
+                    Click="previousPage_Click"/>
+
+            <ComboBox Name="pageSelector" SelectedIndex="0" FontSize="20" MinWidth="90"/>
+
+            <Button Name="nextPage" Content="&#8658;" FontSize="26" Background="Transparent" BorderBrush="Transparent"
+                    Click="nextPage_Click"/>
+        </StackPanel>
+        <!-- #endregion -->
         <!-- #endregion -->
     </Grid>
 </Window>

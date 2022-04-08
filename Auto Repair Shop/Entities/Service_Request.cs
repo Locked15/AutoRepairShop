@@ -15,6 +15,7 @@ namespace Auto_Repair_Shop.Entities
     public partial class Service_Request
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+
         public Service_Request()
         {
             this.Parts_To_Request = new HashSet<Parts_To_Request>();
@@ -32,5 +33,35 @@ namespace Auto_Repair_Shop.Entities
         public virtual Person Person { get; set; }
         public virtual Vehicle Vehicle { get; set; }
         public virtual Service_Type Service_Type { get; set; }
+
+        /// <summary>
+        /// Рассчитывает стоимость обслуживания по используемым деталям и их количеству.
+        /// </summary>
+        /// <returns>Итоговая стоимость.</returns>
+        public decimal calculateBasePrice() {
+            decimal price = 0;
+
+            foreach (var item in Parts_To_Request) {
+                price += item.Part.Part_Price * item.Count;
+            }
+
+            return price;
+        }
+
+        /// <summary>
+        /// Рассчитывает итоговую стоимость обслуживания.
+        /// </summary>
+        /// <returns></returns>
+        public decimal calculateTotalPrice() {
+            decimal price;
+
+            try {
+                price = (calculateBasePrice() + Service_Type.Price) * Vehicle.calculateClassModifier();
+            } catch {
+                price = new Random().Next(1000, 250000);
+            }
+
+            return price;
+        }
     }
 }
