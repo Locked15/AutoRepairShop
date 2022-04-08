@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Auto_Repair_Shop.Entities
-{
+namespace Auto_Repair_Shop.Entities { 
+
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
     /// <summary>
     /// Класс, содержащий контекст данных для работы с данными.
     /// </summary>
-    public partial class DBEntities : DbContext
-    {
+    public partial class DBEntities : DbContext {
+
         /// <summary>
         /// Свойство, содержащее контекст данных для работы с данными.
         /// </summary>
@@ -28,13 +28,11 @@ namespace Auto_Repair_Shop.Entities
         /// Он создан приватным, чтобы обеспечить взаимодействие с контекстом данных только через единый интерфейс взаимодействия.
         /// То есть, через свойство "Instance".
         /// </summary>
-        private DBEntities() : base("name=DBEntities")
-        {
+        private DBEntities() : base("name=DBEntities") {
 
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             throw new UnintentionalCodeFirstException();
         }
     

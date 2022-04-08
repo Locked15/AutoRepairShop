@@ -10,12 +10,14 @@ namespace Auto_Repair_Shop.Classes {
     public class ProgramSettings {
 
         #region Свойства класса.
+
         public static ProgramSettings settings { get; set; }
 
         public bool showCompletedRequests { get; set; }
         #endregion
 
         #region Конструкторы класса.
+
         /// <summary>
         /// Конструктор класса.
         /// </summary>
@@ -44,6 +46,7 @@ namespace Auto_Repair_Shop.Classes {
         #endregion
 
         #region Методы.
+
         /// <summary>
         /// Сохраняет текущую конфигурацию приложения.
         /// </summary>

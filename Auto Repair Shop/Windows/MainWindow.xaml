@@ -26,6 +26,7 @@
         </Grid.RowDefinitions>
 
         <!-- #region Верхняя панель. -->
+        
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Поиск:" FontSize="20"/>
         <TextBox Name="searchBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="" Margin="2.5"
                  FontSize="18"/>
@@ -50,21 +51,24 @@
         <!-- #endregion -->
         
         <!-- #region Основное содержимое. -->
+        
         <ListView Name="ActiveRequests" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" MouseDoubleClick="activeRequests_MouseDoubleClick"
                   Background="Gray" BorderBrush="Black" BorderThickness="1.5"/>
         <!-- #endregion -->
         
         <!-- #region Нижняя панель. -->
+        
         <Button Name="settings" Grid.Row="3" Grid.Column="0" Content="Настройки" Click="settings_Click" FontSize="18"
                 Margin="1.5"/>
 
         <Button Name="serviceReporting" Grid.Row="3" Grid.Column="1" Content="Отчётность..." Click="serviceReporting_Click" FontSize="18"
                 Margin="1.5"/>
 
-        <Button Name="addServiceRequest" Grid.Row="3" Grid.Column="2" Content="Добавить запрос" Click="addServiceRequest_Click" FontSize="18"
+        <Button Name="addServiceRequest" Grid.Row="3" Grid.Column="2" Content="Добавить заказ" Click="addServiceRequest_Click" FontSize="18"
                 Margin="1.5"/>
         
         <!-- #region Подобласть: Навигационная панель. -->
+        
         <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Name="previousPage" Content="&#8656;" FontSize="26" Background="Transparent" BorderBrush="Transparent"
                     Click="previousPage_Click"/>

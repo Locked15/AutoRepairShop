@@ -19,6 +19,7 @@ namespace Auto_Repair_Shop.Windows {
         public List<Service_Request> selectedRequests { get; set; } = DBEntities.Instance.Service_Request.ToList();
 
         #region Функции инициализации.
+
         /// <summary>
         /// Конструктор класса. 
         /// </summary>
@@ -51,6 +52,7 @@ namespace Auto_Repair_Shop.Windows {
         #endregion
 
         #region Функции выборки.
+
         private void selectionChanged(object sender, dynamic e) {
             var search = searchBox.Text.ToLower();
             selectedRequests = DBEntities.Instance.Service_Request.ToList();
@@ -144,6 +146,7 @@ namespace Auto_Repair_Shop.Windows {
         #endregion
 
         #region Функции списка заказов.
+
         private void activeRequests_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
 
         }
@@ -151,6 +154,7 @@ namespace Auto_Repair_Shop.Windows {
         #endregion
 
         #region Функции нижней панели.
+
         private void settings_Click(object sender, RoutedEventArgs e) {
             SettingsWindow window = new SettingsWindow();
             bool? result = window.ShowDialog();
@@ -170,6 +174,7 @@ namespace Auto_Repair_Shop.Windows {
         #endregion
 
         #region Функции навигации.
+
         private void previousPage_Click(object sender, RoutedEventArgs e) {
             if (pageSelector.SelectedIndex > 0) {
                 --pageSelector.SelectedIndex;
@@ -190,6 +195,7 @@ namespace Auto_Repair_Shop.Windows {
         #endregion
 
         #region Прочие события.
+
         private void window_SizeChanged(object sender, SizeChangedEventArgs e) {
             double width;
             try {

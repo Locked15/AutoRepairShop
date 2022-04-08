@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows.Media;
 using System.Windows.Controls;
 using Auto_Repair_Shop.Entities;
@@ -17,6 +16,7 @@ namespace Auto_Repair_Shop.UserControls {
         public Service_Request request { get; set; }
 
         #region Функции инициализации.
+
         /// <summary>
         /// Конструктор класса.
         /// </summary>
