@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Windows.Media;
+using System.Collections.Generic;
 using Auto_Repair_Shop.Entities;
 
 namespace Auto_Repair_Shop.Classes.Reporting { 
@@ -32,14 +33,27 @@ namespace Auto_Repair_Shop.Classes.Reporting {
             try {     
                 if (legacyDocumentFormat) {
                     generateLegacyExcelReport();
-
-                    return true;
                 } else {
-                    return false;
+                   generateModernExcelReport();
                 }
+
+                return true;
             } catch {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Конвертирует строковое представление цвета (HEX) в массив байтов (RGB).
+        /// </summary>
+        /// <param name="hex">Цвет в HEX-формате.</param>
+        /// <returns>Массив байтов в формате RGB.</returns>
+        private byte[] convertFromHexToRgb(string hex)
+        {
+            SolidColorBrush brush = new BrushConverter().ConvertFromString(hex) as SolidColorBrush;
+            Color color = brush.Color;
+
+            return new byte[] { color.R, color.G, color.B };
         }
     }
 }

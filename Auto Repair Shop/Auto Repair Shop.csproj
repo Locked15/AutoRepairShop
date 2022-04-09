@@ -117,8 +117,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Reporting\ExcelReport\ExcelModernReporting.cs" />
     <Compile Include="Classes\Reporting\ExcelReport\ExcelLegacyReporting.cs" />
-    <Compile Include="Classes\Reporting\ExcelReport\ExcelReporting.cs" />
+    <Compile Include="Classes\Reporting\ExcelReport\ExcelBaseReporting.cs" />
     <Compile Include="Classes\Reporting\KirovReporting.cs" />
     <Compile Include="Classes\Reporting\WordReporting.cs" />
     <Compile Include="Windows\ReportingWindow.xaml.cs">
