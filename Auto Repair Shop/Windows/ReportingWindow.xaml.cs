@@ -2,16 +2,18 @@
 using System.IO;
 using System.Linq;
 using System.Windows;
-using Auto_Repair_Shop.Classes;
 using Auto_Repair_Shop.Entities;
+using Auto_Repair_Shop.Classes.Reporting;
 
-namespace Auto_Repair_Shop.Windows
-{
+namespace Auto_Repair_Shop.Windows { 
+
     /// <summary>
     /// Логика взаимодействия для ReportingWindow.xaml.
     /// </summary>
-    public partial class ReportingWindow : Window
-    {
+    public partial class ReportingWindow : Window {
+
+        #region Свойства.
+
         /// <summary>
         /// Название шрифта, который будет использоваться для генерации документа.
         /// </summary>
@@ -21,12 +23,14 @@ namespace Auto_Repair_Shop.Windows
         /// Место, где будет сохранен документ.
         /// </summary>
         public string folderPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        #endregion
+
+        #region Функции инициализации.
 
         /// <summary>
         /// Конструктор класса.
         /// </summary>
-        public ReportingWindow()
-        {
+        public ReportingWindow() {
             InitializeComponent();
             initializeHeaders();
             DataContext = this;
@@ -47,9 +51,16 @@ namespace Auto_Repair_Shop.Windows
             secondHeader.Text = "После формирования отчёта вы сможете открыть его и просмотреть всю доступную информацию по текущим заказам.\n" +
                                 "Заметьте, что если в настройках отключено отображение старых заказов, то и в отчётности они не появятся.";
         }
+        #endregion
 
-        private void setFont_Click(object sender, RoutedEventArgs e)
-        {
+        #region Функции выбора настроек.
+
+        /// <summary>
+        /// Позволяет пользователю установить шрифт для генерации отчёта.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
+        private void setFont_Click(object sender, RoutedEventArgs e) {
             var dialog = new System.Windows.Forms.FontDialog();
             var result = dialog.ShowDialog();
 
@@ -60,6 +71,11 @@ namespace Auto_Repair_Shop.Windows
             }
         }
 
+        /// <summary>
+        /// Позволяет пользователю установить директорию для сохранения отчёта.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void setFolder_Click(object sender, RoutedEventArgs e) {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
             dialog.Description = "Выбор директории";
@@ -74,10 +90,26 @@ namespace Auto_Repair_Shop.Windows
                                 "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+        #endregion
 
-        private void generateExcel_Click(object sender, RoutedEventArgs e)
-        {
+        #region Функции генерации отчётов.
 
+        /// <summary>
+        /// Проверяет состояние полей настроек и начинает генерацию отчёта Excel.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
+        private void generateExcel_Click(object sender, RoutedEventArgs e) {
+            bool legacy = legacyDocumentType.IsChecked.HasValue && legacyDocumentType.IsChecked.Value;
+            string path = Path.Combine(folderPath, $"Отчёт{(legacy ? ".xls" : ".xlsx")}");
+
+            beginExcelGeneration(path, legacy);
+        }
+
+        private void beginExcelGeneration(string path, bool legacy) {
+            ExcelReporting reporting = new ExcelReporting(path, fontFamily, legacy, DBEntities.Instance.Service_Request.ToList());
+
+            notifyAboutResult(reporting.generateReport());
         }
 
         /// <summary>
@@ -85,8 +117,7 @@ namespace Auto_Repair_Shop.Windows
         /// </summary>
         /// <param name="sender">Объект, вызвавший событие.</param>
         /// <param name="e">Аргументы события.</param>
-        private void generateWord_Click(object sender, RoutedEventArgs e)
-        {
+        private void generateWord_Click(object sender, RoutedEventArgs e) {
             if (legacyDocumentType.IsChecked.HasValue && legacyDocumentType.IsChecked.Value) {
                 var confirm = MessageBox.Show("Формирование документа Word в устаревшем формате на данный момент недоступно.\n\n" +
                                               "Использовать современный формат (*.docx)?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -107,13 +138,23 @@ namespace Auto_Repair_Shop.Windows
             string path = Path.Combine(folderPath, "Отчёт.docx");
             WordReporting reportGenerator = new WordReporting(path, fontFamily, false, DBEntities.Instance.Service_Request.ToList());
 
-            var result = reportGenerator.generateReport();
+            notifyAboutResult(reportGenerator.generateReport());
+        }
+        #endregion
 
+        #region Прочие функции.
+
+        /// <summary>
+        /// Уведомляет пользователя о результате формирования отчёта.
+        /// </summary>
+        /// <param name="result">Результат формирования отчёта.</param>
+        private void notifyAboutResult(bool result) {
             if (result) {
                 MessageBox.Show("Отчёт успешно создан.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             } else {
                 MessageBox.Show("Произошла ошибки во время создания отчёта.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion
     }
 }

@@ -62,9 +62,9 @@ namespace Auto_Repair_Shop.Entities
         public string getDividedStateNumber() {
             string original = State_Number;
 
-            original.Insert(1, " ");
-            original.Insert(4, " ");
-            original.Insert(original.Length - 3, " ");
+            original = original.Insert(1, " ");
+            original = original.Insert(5, " ");
+            original = original.Insert(original.Length - 3, " ");
 
             return original;
         }

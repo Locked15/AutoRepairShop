@@ -6,7 +6,7 @@ using NPOI.XWPF.UserModel;
 using Auto_Repair_Shop.Entities;
 using Auto_Repair_Shop.Resources;
 
-namespace Auto_Repair_Shop.Classes {
+namespace Auto_Repair_Shop.Classes.Reporting {
 
     /// <summary>
     /// Класс, нужный для формирования отчёта.
@@ -117,7 +117,7 @@ namespace Auto_Repair_Shop.Classes {
             run.FontSize = 18;
 
             run.SetFontFamily(fontFamily, FontCharRange.None);
-            run.SetText($"{request.Vehicle.Vehicle_Brand.Brand} — {request.Vehicle.Name}");
+            run.SetText($"{request.Vehicle.Name} — {request.Vehicle.Vehicle_Brand.Brand}");
             run.SetColor(request.Vehicle.getColorFromClass());
             run.AddBreak(BreakType.TEXTWRAPPING);
         }
