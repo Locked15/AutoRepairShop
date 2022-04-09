@@ -13,24 +13,30 @@ namespace Auto_Repair_Shop.Classes {
         /// <summary>
         /// Полное имя файла.
         /// </summary>
-        public string fullFileName { get; set; }
+        protected string fullFileName { get; set; }
+
+        /// <summary>
+        /// Используемый шрифт для генерации документа.
+        /// </summary>
+        public string fontFamily { get; set; }
 
         /// <summary>
         /// Использовать устаревший формат документа.
         /// </summary>
-        public bool legacyDocumentFormat { get; set; }
+        protected bool legacyDocumentFormat { get; set; }
 
         /// <summary>
         /// Список с заказами для формирования отчёта.
         /// </summary>
-        public List<Service_Request> requests { get; set; }
+        protected List<Service_Request> requests { get; set; }
 
         /// <summary>
         /// Конструктор класса по умолчанию. Абстрактного класса.
         /// </summary>
-        public KirovReporting() {
+        protected KirovReporting() {
             fullFileName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             legacyDocumentFormat = false;
+            fontFamily = "Georgia";
 
             requests = Enumerable.Empty<Service_Request>().ToList();
         }
@@ -41,10 +47,15 @@ namespace Auto_Repair_Shop.Classes {
         /// <param name="fullFileName">Полный путь к файлу.</param>
         /// <param name="legacyDocumentFormat">Использовать устаревший формат документа.</param>
         /// <param name="requests">Список заказов для формирования отчёта.</param>
-        public KirovReporting(string fullFileName, bool legacyDocumentFormat, List<Service_Request> requests) {
+        protected KirovReporting(string fullFileName, string fontFamily, bool legacyDocumentFormat, List<Service_Request> requests) {
             this.fullFileName = fullFileName;
             this.legacyDocumentFormat = legacyDocumentFormat;
+            this.fontFamily = fontFamily;
             this.requests = requests;
+
+            if (!ProgramSettings.settings.showCompletedRequests) {
+                requests = requests.Where(x => x.Request_Approx_Complete > DateTime.Now).ToList();
+            }
         }
     }
 }

@@ -54,5 +54,38 @@ namespace Auto_Repair_Shop.Entities
                     throw new Exception("Oh no, something went wrong! But by the way...");
             }
         }
+
+        /// <summary>
+        /// Возвращает номер машины с разделителями.
+        /// </summary>
+        /// <returns>Номер машины с разделителями ("Ф201УС102" -> "Ф 201 УС 102").</returns>
+        public string getDividedStateNumber() {
+            string original = State_Number;
+
+            original.Insert(1, " ");
+            original.Insert(4, " ");
+            original.Insert(original.Length - 3, " ");
+
+            return original;
+        }
+
+        /// <summary>
+        /// Рассчитывает цвет на основе класса автомобиля.
+        /// </summary>
+        /// <returns>Цвет в HEX-формате.</returns>
+        public string getColorFromClass()
+        {
+            switch (Vehicle_Class)
+            {
+                case 1:
+                    return "#AFEEEE";
+                case 2:
+                    return "#FFDAE0";
+                case 3:
+                    return "#EDE0BF";
+                default:
+                    return "#DAD6CD";
+            }
+        }
     }
 }

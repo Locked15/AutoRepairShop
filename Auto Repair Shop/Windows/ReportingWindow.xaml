@@ -34,7 +34,7 @@
         <Label Grid.Row="0" Grid.Column="1" Content="Мастер отчётности" FontSize="22"/>
 
         <TextBlock Name="mainHeader" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TextAlignment="Justify" VerticalAlignment="Top" Text="BLANK"
-                   TextWrapping="Wrap"/>
+                   TextWrapping="Wrap" FontSize="15"/>
         <!-- #endregion -->
 
         <Border Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="1"/>
@@ -47,7 +47,7 @@
         <Button Name="setFont" Grid.Row="4" Grid.Column="0" Margin="2.5" Content="Указать шрифт" FontSize="16" Click="setFont_Click"/>
         <Button Name="setFolder" Grid.Row="4" Grid.Column="2" Margin="2.5" Content="Указать путь сохранения" FontSize="16" Click="setFolder_Click"/>
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" Text="{Binding Path=savePath}"/>
+        <TextBlock Name="currentFolder" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" Text="{Binding Path=folderPath}"/>
         <!-- #endregion -->
 
         <Border Grid.Row="7" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="1"/>

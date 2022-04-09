@@ -63,26 +63,7 @@ namespace Auto_Repair_Shop.UserControls {
         /// Обновляет цвет заднего фона в зависимости от значений свойств.
         /// </summary>
         private void updateColor() {
-            string color = string.Empty;
-
-            switch (request.Vehicle.Vehicle_Class) {
-                case 1:
-                    color = "#AFEEEE";
-
-                    break;
-                case 2:
-                    color = "#FFDAE0";
-
-                    break;
-                case 3:
-                    color = "#EDE0BF";
-
-                    break;
-                default:
-                    color = "#DAD6CD";
-
-                    break;
-            }
+            string color = request.Vehicle.getColorFromClass();
 
             Background = ColorConverter.ConvertFromString(color) as Brush;
         }

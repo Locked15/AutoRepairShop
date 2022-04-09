@@ -165,7 +165,8 @@ namespace Auto_Repair_Shop.Windows {
         }
 
         private void serviceReporting_Click(object sender, RoutedEventArgs e) {
-
+            ReportingWindow window = new ReportingWindow();
+            window.ShowDialog();
         }
 
         private void addServiceRequest_Click(object sender, RoutedEventArgs e) {

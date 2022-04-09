@@ -39,7 +39,7 @@ namespace Auto_Repair_Shop.Entities {
         public virtual DbSet<Part> Parts { get; set; }
         public virtual DbSet<Parts_To_Request> Parts_To_Request { get; set; }
         public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<Service_Request> Service_Request { get; set; }
+        public virtual DbSet<Service_Request> Service_Request { get ; set; }
         public virtual DbSet<Service_Type> Service_Type { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Vehicle_Brand> Vehicle_Brand { get; set; }
