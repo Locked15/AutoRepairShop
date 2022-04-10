@@ -31,6 +31,9 @@ namespace Auto_Repair_Shop.Windows {
             selectionChanged(default, default);
         }
 
+        /// <summary>
+        /// Устанавливает обработчики событий для элементов окна.
+        /// </summary>
         private void initializeListeners() {
             searchBox.TextChanged += selectionChanged;
             sortBox.SelectionChanged += selectionChanged;
@@ -39,6 +42,9 @@ namespace Auto_Repair_Shop.Windows {
             pageSelector.SelectionChanged += pageSelector_SelectionChanged;
         }
 
+        /// <summary>
+        /// Заполняет данными список доступных вариантов фильтрации.
+        /// </summary>
         private void initializeRequestTypes() {
             var types = new List<string>(1) {
                 "Все типы"
@@ -53,6 +59,13 @@ namespace Auto_Repair_Shop.Windows {
 
         #region Функции выборки.
 
+        /// <summary>
+        /// Происходит при смене какой-либо функции выборки (поиск, сортировка или фильтрация).
+        /// <br/>
+        /// Обновляет список доступных заказов.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void selectionChanged(object sender, dynamic e) {
             var search = searchBox.Text.ToLower();
             selectedRequests = DBEntities.Instance.Service_Request.ToList();
@@ -113,6 +126,11 @@ namespace Auto_Repair_Shop.Windows {
             }
         }
 
+        /// <summary>
+        /// Обновляет список доступных страниц. 
+        /// <br/>
+        /// Сбрасывает выбранную страницу и вставляет товары заново.
+        /// </summary>
         private void updatePages() {
             int pages = selectedRequests.Count / 20;
 
@@ -132,29 +150,57 @@ namespace Auto_Repair_Shop.Windows {
             }
         }
 
+        /// <summary>
+        /// Вставляет заказы в список на окне.
+        /// </summary>
+        /// <param name="requests">Список заказов для вставки.</param>
         private void insertRequestsToList(List<Service_Request> requests) {
-            ActiveRequests.Items.Clear();
+            activeRequests.Items.Clear();
 
             foreach (var request in requests) {
                 var item = new RequestListItem(request) {
                     Width = Width - 45
                 };
 
-                ActiveRequests.Items.Add(item);
+                activeRequests.Items.Add(item);
             }
         }
         #endregion
 
         #region Функции списка заказов.
 
+        /// <summary>
+        /// Возникает при двойном нажатии на элемент списка заказов.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void activeRequests_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            var selectedItem = (activeRequests.SelectedItem as RequestListItem)?.request;
 
+            // Если пользователь дважды кликнет на пустой области, произойдет добавление товара. Чтобы этого избежать, делаем проверку.
+            if (selectedItem != null) {
+                var window = new RequestSettingWindow(selectedItem);
+                var result = window.ShowDialog();
+
+                if (result.HasValue && result.Value) {
+                    if (window.toDelete) {
+                        DBEntities.Instance.Service_Request.Remove(selectedItem);
+                    }
+
+                    DBEntities.Instance.SaveChanges();
+                    selectionChanged(default, default);
+                }
+            }
         }
-
         #endregion
 
         #region Функции нижней панели.
 
+        /// <summary>
+        /// Открывает окно настроек программы.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void settings_Click(object sender, RoutedEventArgs e) {
             SettingsWindow window = new SettingsWindow();
             bool? result = window.ShowDialog();
@@ -164,30 +210,65 @@ namespace Auto_Repair_Shop.Windows {
             }
         }
 
+        /// <summary>
+        /// Открывает окно формирования отчётности.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void serviceReporting_Click(object sender, RoutedEventArgs e) {
             ReportingWindow window = new ReportingWindow();
             window.ShowDialog();
         }
 
+        /// <summary>
+        /// Открывает окно добавления нового заказа.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void addServiceRequest_Click(object sender, RoutedEventArgs e) {
+            var window = new RequestSettingWindow(null);
+            var result = window.ShowDialog();
 
+            if (result.HasValue && result.Value) {
+                DBEntities.Instance.Service_Request.Add(window.request);
+                DBEntities.Instance.SaveChanges();
+
+                selectionChanged(default, default);
+            }
         }
         #endregion
 
         #region Функции навигации.
 
+        /// <summary>
+        /// Переводит пользователя на предыдущую страницу.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void previousPage_Click(object sender, RoutedEventArgs e) {
             if (pageSelector.SelectedIndex > 0) {
                 --pageSelector.SelectedIndex;
             }
         }
 
+        /// <summary>
+        /// Происходит при смене выбранной страницы.
+        /// <br/>
+        /// Обновляет выведенные на экран заказы.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void pageSelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             var current = selectedRequests.Skip(pageSelector.SelectedIndex * 20).Take(20);
 
             insertRequestsToList(current.ToList());
         }
 
+        /// <summary>
+        /// Переводит пользователя на следующую страницу.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void nextPage_Click(object sender, RoutedEventArgs e) {
             if (pageSelector.SelectedIndex + 1 < pageSelector.Items.Count) {
                 ++pageSelector.SelectedIndex;
@@ -197,6 +278,13 @@ namespace Auto_Repair_Shop.Windows {
 
         #region Прочие события.
 
+        /// <summary>
+        /// Происходит при изменении размера окна.
+        /// <br/>
+        /// Подстраивает все выведенные заказы под новый размер.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void window_SizeChanged(object sender, SizeChangedEventArgs e) {
             double width;
             try {
@@ -205,7 +293,7 @@ namespace Auto_Repair_Shop.Windows {
                 width = Width - 45;
             }
 
-            foreach (RequestListItem item in ActiveRequests.Items) {
+            foreach (RequestListItem item in activeRequests.Items) {
                 item.Width = width;
             }
         }

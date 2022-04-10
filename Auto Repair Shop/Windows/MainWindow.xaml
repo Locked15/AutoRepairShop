@@ -52,7 +52,7 @@
         
         <!-- #region Основное содержимое. -->
         
-        <ListView Name="ActiveRequests" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" MouseDoubleClick="activeRequests_MouseDoubleClick"
+        <ListView Name="activeRequests" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" MouseDoubleClick="activeRequests_MouseDoubleClick"
                   Background="Gray" BorderBrush="Black" BorderThickness="1.5"/>
         <!-- #endregion -->
         

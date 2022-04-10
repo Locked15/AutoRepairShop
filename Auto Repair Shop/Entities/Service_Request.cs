@@ -10,6 +10,7 @@
 namespace Auto_Repair_Shop.Entities
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     
     public partial class Service_Request
