@@ -35,6 +35,10 @@
             <TextBlock FontSize="18" Text="|" Margin="25, 0, 0, 0"/>
 
             <TextBlock Text="{Binding Path=Vehicle.Name}" Margin="25, 0, 0, 0"/>
+
+            <TextBlock FontSize="18" Text="|" Margin="25, 0, 0, 0"/>
+
+            <TextBlock Name="vehicleStateNumber" Text="Ф 201 УС 102" Margin="25, 0, 0, 0"/>
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 7.5, 0">

@@ -30,6 +30,7 @@ namespace Auto_Repair_Shop.UserControls {
             this.request = request;
 
             bindImages();
+            initializeStateNumber();
             initializePrice();
             insertParts();
             updateColor();
@@ -45,6 +46,11 @@ namespace Auto_Repair_Shop.UserControls {
             brandImage.Source = new System.Windows.Media.Imaging.BitmapImage(
                                 new Uri(ResourceManager.checkExistsAndReturnFullPath(request.Vehicle.Vehicle_Brand.Image)));
         }
+
+        /// <summary>
+        /// Вставляет в элемент государственный номер автомобиля.
+        /// </summary>
+        private void initializeStateNumber() => vehicleStateNumber.Text = request.Vehicle.getDividedStateNumber();
 
         /// <summary>
         /// Рассчитывает стоимость заказа на основе стоимости комплектующих.
