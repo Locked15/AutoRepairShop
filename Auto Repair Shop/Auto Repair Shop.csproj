@@ -131,6 +131,9 @@
     <Compile Include="Windows\CreatingSubWindows\AddServicePartsToRequestWindow.xaml.cs">
       <DependentUpon>AddServicePartsToRequestWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CreatingSubWindows\CreateNewServicePartWindow.cs">
+      <DependentUpon>CreateNewServicePartWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ReportingWindow.xaml.cs">
       <DependentUpon>ReportingWindow.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CreatingSubWindows\AddServicePartsToRequestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreatingSubWindows\CreateNewServicePartWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

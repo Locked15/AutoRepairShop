@@ -185,7 +185,15 @@ namespace Auto_Repair_Shop.Windows.CreatingSubWindows {
         /// <param name="sender">Объект, вызвавший событие.</param>
         /// <param name="e">Аргументы события.</param>
         private void createNewPart_Click(object sender, RoutedEventArgs e) {
+            CreateNewServicePartWindow window = new CreateNewServicePartWindow();
+            var result = window.ShowDialog();
 
+            if (result.HasValue && result.Value) {
+                DBEntities.Instance.Parts.Add(window.newPart);
+                DBEntities.Instance.SaveChanges();
+
+                updateAllPartsList();
+            }
         }
 
         /// <summary>
