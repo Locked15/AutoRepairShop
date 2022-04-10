@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows.Media;
 using System.Windows.Controls;
 using Auto_Repair_Shop.Entities;
+using Auto_Repair_Shop.Resources;
 
 namespace Auto_Repair_Shop.UserControls { 
 
@@ -27,9 +29,21 @@ namespace Auto_Repair_Shop.UserControls {
             DataContext = request;
             this.request = request;
 
+            bindImages();
             initializePrice();
             insertParts();
             updateColor();
+        }
+
+        /// <summary>
+        /// Так как путь изображений относителен проекта, то привязывать изображения придется вручную.
+        /// </summary>
+        private void bindImages() {
+            vehicleImage.Source = new System.Windows.Media.Imaging.BitmapImage(
+                                  new Uri(ResourceManager.checkExistsAndReturnFullPath(request.Vehicle.Image)));
+
+            brandImage.Source = new System.Windows.Media.Imaging.BitmapImage(
+                                new Uri(ResourceManager.checkExistsAndReturnFullPath(request.Vehicle.Vehicle_Brand.Image)));
         }
 
         /// <summary>

@@ -26,8 +26,8 @@
         <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"
                 Margin="2.5"/>
         
-        <Image Name="vehicleImage" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Source="{Binding Path=Vehicle.Image}"
-               Stretch="Fill" Margin="2.5" RenderOptions.BitmapScalingMode="HighQuality"/>
+        <Image Name="vehicleImage" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Stretch="Fill" Margin="2.5" 
+               RenderOptions.BitmapScalingMode="HighQuality"/>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
             <TextBlock Text="{Binding Path=Service_Type.Name}"/>
@@ -43,8 +43,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <Image Name="brandImage" Stretch="Fill" MaxWidth="30" MaxHeight="30" MinWidth="25" MinHeight="25"
-                   Source="{Binding Path=Vehicle.Vehicle_Brand.Image}"/>
+            <Image Name="brandImage" Stretch="Fill" MaxWidth="30" MaxHeight="30" MinWidth="25" MinHeight="25"/>
 
             <TextBlock FontSize="18" Text="{Binding Path=Vehicle.Vehicle_Brand.Brand}" Margin="5, 0, 0, 0"/>
         </StackPanel>

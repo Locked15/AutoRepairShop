@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources/Tools.ico</ApplicationIcon>
+    <ApplicationIcon>Resources/Pictures/Tools.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
@@ -122,16 +122,23 @@
     <Compile Include="Classes\Reporting\ExcelReport\ExcelBaseReporting.cs" />
     <Compile Include="Classes\Reporting\KirovReporting.cs" />
     <Compile Include="Classes\Reporting\WordReporting.cs" />
+    <Compile Include="Windows\CreatingSubWindows\AddNewVehicleWindow.xaml.cs">
+      <DependentUpon>AddNewVehicleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ReportingWindow.xaml.cs">
       <DependentUpon>ReportingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RequestSettingWindow.xaml.cs">
+    <Compile Include="Windows\CreatingSubWindows\RequestSettingWindow.xaml.cs">
       <DependentUpon>RequestSettingWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="UserControls\RequestListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreatingSubWindows\AddNewVehicleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,7 +203,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\RequestSettingWindow.xaml">
+    <Page Include="Windows\CreatingSubWindows\RequestSettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,8 +253,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Resource Include="Resources\Default.png" />
-    <Resource Include="Resources\Tools.ico" />
+    <Resource Include="Resources\Pictures\Default.png" />
+    <Resource Include="Resources\Pictures\Tools.ico" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

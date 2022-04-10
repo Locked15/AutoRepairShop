@@ -3,8 +3,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Auto_Repair_Shop.Entities;
+using Auto_Repair_Shop.Windows.CreatingSubWindows;
 
-namespace Auto_Repair_Shop.Windows {
+namespace Auto_Repair_Shop.Windows.CreatingWindows {
 
     /// <summary>
     /// Окно добавления заказа.
@@ -189,7 +190,17 @@ namespace Auto_Repair_Shop.Windows {
         /// <param name="sender">Объект, вызвавший событие.</param>
         /// <param name="e">Аргументы события.</param>
         private void createVehicle_Click(object sender, RoutedEventArgs e) {
+            AddNewVehicleWindow window = new AddNewVehicleWindow();
+            var result = window.ShowDialog();
 
+            if (result.HasValue && result.Value) {
+                DBEntities.Instance.Vehicles.Add(window.newVehicle);
+                DBEntities.Instance.SaveChanges();
+
+                initializeVehiclesList();
+
+                vehicleSelect.SelectedIndex = DBEntities.Instance.Vehicles.ToList().FindIndex(v => v.Id == request.Vehicle_Id);
+            }
         }
 
         /// <summary>
