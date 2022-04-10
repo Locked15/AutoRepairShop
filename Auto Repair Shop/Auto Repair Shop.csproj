@@ -122,6 +122,9 @@
     <Compile Include="Classes\Reporting\ExcelReport\ExcelBaseReporting.cs" />
     <Compile Include="Classes\Reporting\KirovReporting.cs" />
     <Compile Include="Classes\Reporting\WordReporting.cs" />
+    <Compile Include="Windows\CreatingSubWindows\AddNewPersonWindow.xaml.cs">
+      <DependentUpon>AddNewPersonWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CreatingSubWindows\AddNewVehicleWindow.xaml.cs">
       <DependentUpon>AddNewVehicleWindow.xaml</DependentUpon>
     </Compile>
@@ -135,6 +138,10 @@
       <DependentUpon>RequestSettingWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="UserControls\RequestListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreatingSubWindows\AddNewPersonWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

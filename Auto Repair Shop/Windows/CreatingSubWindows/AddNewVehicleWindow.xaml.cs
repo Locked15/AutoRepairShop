@@ -150,7 +150,7 @@ namespace Auto_Repair_Shop.Windows.CreatingSubWindows {
             if (error == string.Empty) {
                 return true;
             } else {
-                MessageBox.Show($"Обнаружен(-а\\-ы) ошибк(-а\\-и):\n{error}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Обнаружены ошибки:\n{error}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 return false;
             }

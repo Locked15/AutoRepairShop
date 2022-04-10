@@ -209,7 +209,17 @@ namespace Auto_Repair_Shop.Windows.CreatingWindows {
         /// <param name="sender">Объект, вызвавший событие.</param>
         /// <param name="e">Аргументы события</param>
         private void createPerson_Click(object sender, RoutedEventArgs e) {
+            AddNewPersonWindow window = new AddNewPersonWindow();
+            var result = window.ShowDialog();
 
+            if (result.HasValue && result.Value) {
+                DBEntities.Instance.People.Add(window.newPerson);
+                DBEntities.Instance.SaveChanges();
+
+                initializeRequesterList();
+
+                requesterSelect.SelectedIndex = DBEntities.Instance.People.ToList().FindIndex(v => v.Id == request.Requester_Id);
+            }
         }
 
         /// <summary>
@@ -278,7 +288,7 @@ namespace Auto_Repair_Shop.Windows.CreatingWindows {
             if (error == string.Empty) {
                 return true;
             } else {
-                MessageBox.Show($"Обнаружена ошибк(-а/-и):\n{error}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Обнаружены ошибки:\n{error}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 return false;
             }
