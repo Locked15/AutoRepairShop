@@ -188,8 +188,15 @@ namespace Auto_Repair_Shop.Windows {
                         DBEntities.Instance.Service_Request.Remove(selectedItem);
                     }
 
-                    DBEntities.Instance.SaveChanges();
-                    selectionChanged(default, default);
+                    try {
+                        DBEntities.Instance.SaveChanges();
+
+                        selectionChanged(default, default);
+                    } catch {
+                        MessageBox.Show("Каждый раз, когда тестировщик пытается сломать программу, в мире грустит один программист." +
+                                        "\n\nНе нужно печалить программистов — не ломайте программы.", 
+                                        "Манифест", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
                 }
             }
         }

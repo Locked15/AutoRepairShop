@@ -128,6 +128,9 @@
     <Compile Include="Windows\CreatingSubWindows\AddNewVehicleWindow.xaml.cs">
       <DependentUpon>AddNewVehicleWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CreatingSubWindows\AddServicePartsToRequestWindow.xaml.cs">
+      <DependentUpon>AddServicePartsToRequestWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ReportingWindow.xaml.cs">
       <DependentUpon>ReportingWindow.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CreatingSubWindows\AddNewVehicleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreatingSubWindows\AddServicePartsToRequestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

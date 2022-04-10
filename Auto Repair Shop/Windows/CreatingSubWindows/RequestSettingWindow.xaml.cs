@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 using Auto_Repair_Shop.Entities;
 using Auto_Repair_Shop.Windows.CreatingSubWindows;
 
@@ -178,7 +179,15 @@ namespace Auto_Repair_Shop.Windows.CreatingWindows {
         /// <param name="sender">Объект, вызвавший событие.</param>
         /// <param name="e">Аргументы события.</param>
         private void setRequestParts_Click(object sender, RoutedEventArgs e) {
+            var copy = new List<Parts_To_Request>(request.Parts_To_Request.Count);
+            copy.AddRange(request.Parts_To_Request);
 
+            AddServicePartsToRequestWindow window = new AddServicePartsToRequestWindow(this, copy);
+            var result = window.ShowDialog();
+
+            if (result.HasValue && result.Value) {
+                request.Parts_To_Request = copy;
+            }
         }
         #endregion
 
@@ -254,7 +263,10 @@ namespace Auto_Repair_Shop.Windows.CreatingWindows {
         /// <param name="e">Аргументы события</param>
         private void saveRequest_Click(object sender, RoutedEventArgs e) {
             if (checkCorrect()) {
-                if (request.Service_Type.Id != 1 && request.Service_Type.Id != 4 && request.Service_Type.Id != 5) {
+                if (request.Parts_To_Request.Count > 0 && request.Service_Type.Id != 1 && request.Service_Type.Id != 4 && request.Service_Type.Id != 5) {
+                    DBEntities.Instance.Parts_To_Request.RemoveRange(request.Parts_To_Request);
+                    DBEntities.Instance.SaveChanges();
+
                     request.Parts_To_Request.Clear();
                 }
 

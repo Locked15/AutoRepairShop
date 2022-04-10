@@ -55,7 +55,9 @@ namespace Auto_Repair_Shop.Classes.Reporting {
             foreach (var request in requests) {
                 generateHeaders(document, request);
                 generateTable(document, request);
-                generatePageBreak(document);
+                
+                if (request != requests.Last())
+                    generatePageBreak(document);
             }
 
             using (FileStream fs = new FileStream(fullFileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite)) {

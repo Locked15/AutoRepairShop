@@ -1,0 +1,58 @@
+﻿<Window x:Class="Auto_Repair_Shop.Windows.CreatingSubWindows.AddServicePartsToRequestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Auto_Repair_Shop.Windows.CreatingSubWindows"
+        mc:Ignorable="d"
+        Title="Добавление запчатей — Auto Repair Shop" 
+        Height="450" Width="500"
+        MinHeight="425" MinWidth="475">
+
+    <Grid Margin="1.5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="40*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="200*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- #region Добавление/Удаление запчастей. -->
+        <ListBox Name="allAvailableParts" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1.5"
+                 Background="Azure" SelectionMode="Single" DisplayMemberPath="Part_Name"/>
+
+        <Button Name="removePartFromRequest" Grid.Row="1" Grid.Column="2" Content="&#9668;" Click="removePartFromRequest_Click"/>
+        <Button Name="addPartToRequest" Grid.Row="3" Grid.Column="2" Content="&#9658;" Click="addPartToRequest_Click"/>
+
+        <ListBox Name="currentRequestParts" Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1.5"
+                 Background="Azure" SelectionChanged="currentRequestParts_SelectionChanged"
+                 SelectionMode="Single" DisplayMemberPath="Part.Part_Name"/>
+        <!-- #endregion -->
+        
+        <!-- #region Установка количества. -->
+        <TextBlock Name="partsCountDesc" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" Text="Количество (%part_name%):" FontSize="16" Visibility="Hidden"/>
+
+        <TextBox Name="partsCount" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="5" Visibility="Hidden" TextChanged="partsCount_TextChanged"/>
+        <!-- #endregion -->
+        
+        <!-- #region Кнопки управления. -->
+        <Button Name="createNewPart" Grid.Row="9" Grid.Column="0" Content="Создать запчасть" Margin="1.5" Click="createNewPart_Click"/>
+
+        <Button Name="saveChanges" Grid.Row="9" Grid.Column="4" Content="Сохранить изменения" Margin="1.5" Click="saveChanges_Click"/>
+        <!-- #endregion -->
+    </Grid>
+</Window>

@@ -10,6 +10,7 @@
 namespace Auto_Repair_Shop.Entities
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     
     public partial class Parts_To_Request
@@ -21,5 +22,11 @@ namespace Auto_Repair_Shop.Entities
     
         public virtual Part Part { get; set; }
         public virtual Service_Request Service_Request { get; set; }
+
+        public static int getTetherId() {
+            int lastTether = DBEntities.Instance.Parts_To_Request.Last().Tether_Id;
+
+            return lastTether + 1;
+        }
     }
 }
