@@ -119,6 +119,8 @@ namespace Auto_Repair_Shop.Windows.CreatingSubWindows {
             if (checkToCorrect()) {
                 newVehicle.Image = ResourceManager.addStandaloneImageToResources(newVehicle.Image);
 
+                checkVehicleToOURManufacturingAndUpdateClassIfRight();
+
                 DialogResult = true;
                 Close();
             }
@@ -153,6 +155,17 @@ namespace Auto_Repair_Shop.Windows.CreatingSubWindows {
                 MessageBox.Show($"Обнаружены ошибки:\n{error}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Проверяет добавляемый автомобиль на отношение к отечественному автопрому и обновляет его класс, если условие верно.
+        /// </summary>
+        private void checkVehicleToOURManufacturingAndUpdateClassIfRight() {
+            string name = newVehicle.Name.ToLower();
+            
+            if (name.Contains("уаз") || name.Contains("ваз") || name.Contains("лада") || name.Contains("волга") || name.Contains("ёМобиль")) {
+                newVehicle.Vehicle_Class = 0;
             }
         }
         #endregion
