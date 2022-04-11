@@ -156,11 +156,18 @@ namespace Auto_Repair_Shop.Windows {
         /// </summary>
         /// <param name="requests">Список заказов для вставки.</param>
         private void insertRequestsToList(List<Service_Request> requests) {
+            double width;
             activeRequests.Items.Clear();
 
             foreach (var request in requests) {
+                if (WindowState == WindowState.Maximized) {
+                    width = RenderSize.Width - 45;
+                } else {
+                    width = Width - 45;
+                }
+
                 var item = new RequestListItem(request) {
-                    Width = Width - 45
+                    Width = width
                 };
 
                 activeRequests.Items.Add(item);
@@ -185,6 +192,8 @@ namespace Auto_Repair_Shop.Windows {
 
                 if (result.HasValue && result.Value) {
                     if (window.toDelete) {
+                        if (selectedItem.Parts_To_Request.Count > 0)
+                            DBEntities.Instance.Parts_To_Request.RemoveRange(selectedItem.Parts_To_Request);
                         DBEntities.Instance.Service_Request.Remove(selectedItem);
                     }
 
